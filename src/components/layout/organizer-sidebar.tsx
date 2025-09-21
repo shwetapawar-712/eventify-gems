@@ -22,11 +22,17 @@ import {
   LogOut, 
   Wallet,
   Plus,
-  BarChart3
+  BarChart3,
+  Home
 } from 'lucide-react';
 import { useWeb3 } from '@/contexts/Web3Context';
 
 const menuItems = [
+  {
+    title: 'Dashboard',
+    url: '/organizer',
+    icon: Home,
+  },
   {
     title: 'Create Event',
     url: '/organizer/create',

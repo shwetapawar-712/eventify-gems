@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Routes, Route, useLocation, Navigate, NavLink, useNavigate } from 'react-router-dom';
 import { SidebarProvider } from '@/components/ui/sidebar';
 import { OrganizerSidebar } from '@/components/layout/organizer-sidebar';
+import { OrganizerDashboardHome } from '@/components/dashboard/organizer-dashboard-home';
 import { CreateEventForm } from '@/components/forms/create-event-form';
 import { EventCard } from '@/components/ui/event-card';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
@@ -261,7 +262,7 @@ export const OrganizerDashboard: React.FC = () => {
         <OrganizerSidebar currentPath={location.pathname} />
         <main className="flex-1 overflow-auto">
           <Routes>
-            <Route path="/" element={<Navigate to="/organizer/create" replace />} />
+            <Route path="/" element={<OrganizerDashboardHome />} />
             <Route path="/create" element={<OrganizerCreate />} />
             <Route path="/events" element={<OrganizerEvents />} />
             <Route path="/badges" element={<OrganizerBadges />} />
