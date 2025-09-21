@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Routes, Route, useLocation, Navigate } from 'react-router-dom';
+import { Routes, Route, useLocation, Navigate, NavLink, useNavigate } from 'react-router-dom';
 import { SidebarProvider } from '@/components/ui/sidebar';
 import { OrganizerSidebar } from '@/components/layout/organizer-sidebar';
 import { CreateEventForm } from '@/components/forms/create-event-form';
@@ -16,19 +16,29 @@ import {
   Loader2,
   RefreshCw,
   Clock,
-  CheckCircle2
+  CheckCircle2,
+  BarChart3
 } from 'lucide-react';
 import { useWeb3, Session } from '@/contexts/Web3Context';
 
 const OrganizerCreate = () => {
   const [refreshTrigger, setRefreshTrigger] = useState(0);
+  const navigate = useNavigate();
 
   const handleEventCreated = () => {
     setRefreshTrigger(prev => prev + 1);
+    // Navigate to events page after successful creation
+    setTimeout(() => {
+      navigate('/organizer/events');
+    }, 1000);
   };
 
   return (
     <div className="p-6 max-w-2xl mx-auto">
+      <div className="mb-6">
+        <h1 className="text-3xl font-bold mb-2">Create New Event</h1>
+        <p className="text-muted-foreground">Set up a new blockchain-based attendance event</p>
+      </div>
       <CreateEventForm onEventCreated={handleEventCreated} />
     </div>
   );
@@ -125,15 +135,17 @@ const OrganizerEvents = () => {
         </Card>
       </div>
 
-      {sessions.length === 0 ? (
+        {sessions.length === 0 ? (
         <Card className="text-center py-12">
           <CardContent>
             <Calendar className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
             <h3 className="text-lg font-semibold mb-2">No events created yet</h3>
             <p className="text-muted-foreground mb-4">Create your first event to get started</p>
-            <Button>
-              <Calendar className="mr-2 h-4 w-4" />
-              Create Event
+            <Button asChild>
+              <NavLink to="/organizer/create">
+                <Calendar className="mr-2 h-4 w-4" />
+                Create Event
+              </NavLink>
             </Button>
           </CardContent>
         </Card>
@@ -170,17 +182,70 @@ const OrganizerAttendance = () => {
   );
 };
 
-const OrganizerBadges = () => {
+const OrganizerAnalytics = () => {
   return (
     <div className="p-6">
-      <h1 className="text-3xl font-bold mb-6">Badge Management</h1>
+      <div className="mb-6">
+        <h1 className="text-3xl font-bold mb-2">Analytics & Insights</h1>
+        <p className="text-muted-foreground">Track event performance and engagement metrics</p>
+      </div>
+      
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+        <Card>
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium">Total Events</CardTitle>
+            <TrendingUp className="h-4 w-4 text-muted-foreground" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold">0</div>
+            <p className="text-xs text-muted-foreground">Coming soon</p>
+          </CardContent>
+        </Card>
+        
+        <Card>
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium">Total Participants</CardTitle>
+            <Users className="h-4 w-4 text-muted-foreground" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold">0</div>
+            <p className="text-xs text-muted-foreground">Coming soon</p>
+          </CardContent>
+        </Card>
+        
+        <Card>
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium">Badges Awarded</CardTitle>
+            <Award className="h-4 w-4 text-muted-foreground" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold">0</div>
+            <p className="text-xs text-muted-foreground">Coming soon</p>
+          </CardContent>
+        </Card>
+        
+        <Card>
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium">Avg. Attendance</CardTitle>
+            <CheckCircle2 className="h-4 w-4 text-muted-foreground" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold">0%</div>
+            <p className="text-xs text-muted-foreground">Coming soon</p>
+          </CardContent>
+        </Card>
+      </div>
+
       <Card>
         <CardHeader>
-          <CardTitle>Award NFT Badges</CardTitle>
-          <CardDescription>Award achievement badges to event participants</CardDescription>
+          <CardTitle>Analytics Dashboard</CardTitle>
+          <CardDescription>
+            Detailed analytics and reporting features will be available soon
+          </CardDescription>
         </CardHeader>
-        <CardContent>
-          <p className="text-muted-foreground">Badge awarding interface coming soon...</p>
+        <CardContent className="text-center py-12">
+          <BarChart3 className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
+          <p className="text-muted-foreground">Advanced analytics interface coming soon...</p>
         </CardContent>
       </Card>
     </div>
@@ -199,11 +264,41 @@ export const OrganizerDashboard: React.FC = () => {
             <Route path="/" element={<Navigate to="/organizer/create" replace />} />
             <Route path="/create" element={<OrganizerCreate />} />
             <Route path="/events" element={<OrganizerEvents />} />
-            <Route path="/attendance" element={<OrganizerAttendance />} />
             <Route path="/badges" element={<OrganizerBadges />} />
+            <Route path="/analytics" element={<OrganizerAnalytics />} />
           </Routes>
         </main>
       </div>
     </SidebarProvider>
+  );
+};
+
+const OrganizerBadges = () => {
+  return (
+    <div className="p-6">
+      <div className="mb-6">
+        <h1 className="text-3xl font-bold mb-2">Badge Management</h1>
+        <p className="text-muted-foreground">Award NFT badges to event participants</p>
+      </div>
+      
+      <Card>
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2">
+            <Award className="h-5 w-5 text-primary" />
+            Award NFT Badges
+          </CardTitle>
+          <CardDescription>
+            Reward participants with unique blockchain-based achievement badges
+          </CardDescription>
+        </CardHeader>
+        <CardContent className="text-center py-12">
+          <Award className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
+          <h3 className="text-lg font-semibold mb-2">Badge System Coming Soon</h3>
+          <p className="text-muted-foreground mb-4">
+            Advanced badge creation and awarding features will be available in the next update
+          </p>
+        </CardContent>
+      </Card>
+    </div>
   );
 };

@@ -8,28 +8,28 @@ All colors MUST be HSL.
 
 @layer base {
   :root {
-    /* Base colors - Dark theme for web3 feel */
-    --background: 220 27% 4%;
-    --foreground: 220 9% 95%;
+    /* Professional color scheme - Dark theme */
+    --background: 222 84% 4.9%;
+    --foreground: 210 40% 98%;
 
-    --card: 220 27% 6%;
-    --card-foreground: 220 9% 95%;
+    --card: 222 84% 4.9%;
+    --card-foreground: 210 40% 98%;
 
-    --popover: 220 27% 6%;
-    --popover-foreground: 220 9% 95%;
+    --popover: 222 84% 4.9%;
+    --popover-foreground: 210 40% 98%;
 
-    /* Purple/blue primary for crypto aesthetic */
-    --primary: 262 83% 58%;
-    --primary-foreground: 220 9% 95%;
+    /* Professional blue primary */
+    --primary: 217 91% 60%;
+    --primary-foreground: 222 84% 4.9%;
 
-    --secondary: 220 27% 8%;
-    --secondary-foreground: 220 9% 85%;
+    --secondary: 217 32% 17%;
+    --secondary-foreground: 210 40% 98%;
 
-    --muted: 220 27% 8%;
-    --muted-foreground: 220 9% 65%;
+    --muted: 217 32% 17%;
+    --muted-foreground: 215 20% 65%;
 
-    --accent: 262 83% 58%;
-    --accent-foreground: 220 9% 95%;
+    --accent: 217 91% 60%;
+    --accent-foreground: 222 84% 4.9%;
 
     --destructive: 0 84% 60%;
     --destructive-foreground: 220 9% 95%;
@@ -38,27 +38,27 @@ All colors MUST be HSL.
     --input: 220 27% 12%;
     --ring: 262 83% 58%;
 
-    /* Custom colors for status and gamification */
-    --success: 142 76% 36%;
-    --success-foreground: 220 9% 95%;
+    /* Professional status colors */
+    --success: 142 71% 45%;
+    --success-foreground: 210 40% 98%;
     
     --warning: 38 92% 50%;
-    --warning-foreground: 220 9% 95%;
+    --warning-foreground: 222 84% 4.9%;
     
-    --info: 221 83% 53%;
-    --info-foreground: 220 9% 95%;
+    --info: 204 94% 94%;
+    --info-foreground: 217 91% 60%;
 
-    /* Badge colors for gamification */
+    /* Professional badge colors */
     --badge-bronze: 25 95% 53%;
     --badge-silver: 220 9% 75%;
     --badge-gold: 45 93% 47%;
-    --badge-diamond: 262 83% 78%;
+    --badge-platinum: 220 9% 85%;
 
-    /* Gradients for modern web3 feel */
-    --gradient-primary: linear-gradient(135deg, hsl(var(--primary)) 0%, hsl(262 100% 78%) 100%);
-    --gradient-secondary: linear-gradient(135deg, hsl(var(--secondary)) 0%, hsl(220 27% 12%) 100%);
-    --gradient-card: linear-gradient(135deg, hsl(var(--card)) 0%, hsl(220 27% 8%) 100%);
-    --gradient-badge: linear-gradient(135deg, hsl(var(--badge-gold)) 0%, hsl(var(--badge-diamond)) 100%);
+    /* Professional gradients */
+    --gradient-primary: linear-gradient(135deg, hsl(217 91% 60%) 0%, hsl(224 76% 48%) 100%);
+    --gradient-secondary: linear-gradient(135deg, hsl(217 32% 17%) 0%, hsl(215 28% 17%) 100%);
+    --gradient-card: linear-gradient(135deg, hsl(222 84% 4.9%) 0%, hsl(217 32% 17%) 100%);
+    --gradient-professional: linear-gradient(135deg, hsl(217 91% 60%) 0%, hsl(142 71% 45%) 100%);
 
     /* Shadows and glows */
     --shadow-primary: 0 10px 30px -10px hsl(var(--primary) / 0.4);

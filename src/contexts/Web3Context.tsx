@@ -316,26 +316,60 @@ export const Web3Provider: React.FC<Web3ProviderProps> = ({ children }) => {
   };
 
   const createSession = async (name: string): Promise<number | null> => {
-    if (!contract) return null;
+    if (!contract) {
+      toast({
+        title: "Wallet Not Connected",
+        description: "Please connect your wallet first.",
+        variant: "destructive",
+      });
+      return null;
+    }
     
     try {
-      const tx = await contract.createSession(name);
-      await tx.wait();
+      // Show loading state
+      toast({
+        title: "Creating Event",
+        description: "Please confirm the transaction in your wallet...",
+      });
       
-      const nextSessionId = await contract.nextSessionId();
-      const sessionId = Number(nextSessionId) - 1;
+      const tx = await contract.createSession(name);
       
       toast({
-        title: "Event Created",
-        description: `Successfully created "${name}"`,
+        title: "Transaction Submitted",
+        description: "Waiting for confirmation...",
+      });
+      
+      const receipt = await tx.wait();
+      
+      // Get the session ID from the transaction
+      let sessionId = 0;
+      try {
+        const nextSessionId = await contract.nextSessionId();
+        sessionId = Number(nextSessionId) - 1;
+      } catch (e) {
+        // Fallback if we can't get the session ID
+        sessionId = 0;
+      }
+      
+      toast({
+        title: "Event Created Successfully",
+        description: `"${name}" is now live on the blockchain!`,
       });
       
       return sessionId;
-    } catch (error) {
+    } catch (error: any) {
       console.error('Error creating session:', error);
+      
+      let errorMessage = "Failed to create event. Please try again.";
+      if (error.code === 'USER_REJECTED') {
+        errorMessage = "Transaction was cancelled.";
+      } else if (error.message?.includes('insufficient funds')) {
+        errorMessage = "Insufficient funds for transaction.";
+      }
+      
       toast({
         title: "Creation Failed",
-        description: "Failed to create event. Please try again.",
+        description: errorMessage,
         variant: "destructive",
       });
       return null;
@@ -424,10 +458,17 @@ export const Web3Provider: React.FC<Web3ProviderProps> = ({ children }) => {
     if (!contract) return [];
     
     try {
+      // Try to get nextSessionId, but handle if contract isn't deployed
       const nextSessionId = await contract.nextSessionId();
+      const sessionCount = Number(nextSessionId);
       const sessions: Session[] = [];
       
-      for (let i = 0; i < Number(nextSessionId); i++) {
+      // If no sessions exist yet, return empty array
+      if (sessionCount === 0) {
+        return [];
+      }
+      
+      for (let i = 0; i < sessionCount; i++) {
         const session = await getSession(i);
         if (session && session.exists) {
           sessions.push(session);
@@ -437,6 +478,7 @@ export const Web3Provider: React.FC<Web3ProviderProps> = ({ children }) => {
       return sessions;
     } catch (error) {
       console.error('Error getting sessions:', error);
+      // Return empty array instead of throwing - contract might not be deployed
       return [];
     }
   };

@@ -41,67 +41,87 @@ export const CreateEventForm: React.FC<CreateEventFormProps> = ({ onEventCreated
 
   return (
     <Card className="card-glow">
-      <CardHeader>
-        <CardTitle className="flex items-center gap-2">
-          <Calendar className="h-5 w-5 text-primary" />
-          Create New Event
-        </CardTitle>
+      <CardHeader className="text-center">
+        <div className="p-3 bg-primary/10 rounded-full w-16 h-16 mx-auto mb-4">
+          <Calendar className="h-10 w-10 text-primary mx-auto mt-1" />
+        </div>
+        <CardTitle className="text-2xl">Create New Event</CardTitle>
         <CardDescription>
-          Create a blockchain-based event for attendance tracking
+          Set up a blockchain-based event for secure attendance tracking
         </CardDescription>
       </CardHeader>
-      
-      <CardContent>
-        <form onSubmit={handleSubmit} className="space-y-4">
+      <CardContent className="space-y-6">
+        <form onSubmit={handleSubmit} className="space-y-6">
           <div className="space-y-2">
-            <Label htmlFor="eventName">Event Title *</Label>
+            <Label htmlFor="eventName" className="text-sm font-medium">
+              Event Title <span className="text-destructive">*</span>
+            </Label>
             <Input
               id="eventName"
-              placeholder="Enter event title..."
+              placeholder="Enter a descriptive event title..."
               value={eventName}
               onChange={(e) => setEventName(e.target.value)}
               required
+              className="h-11"
             />
+            <p className="text-xs text-muted-foreground">
+              This will be stored permanently on the blockchain
+            </p>
           </div>
           
           <div className="space-y-2">
-            <Label htmlFor="eventDate">Event Date</Label>
+            <Label htmlFor="eventDate" className="text-sm font-medium">Event Date & Time</Label>
             <Input
               id="eventDate"
               type="datetime-local"
               value={eventDate}
               onChange={(e) => setEventDate(e.target.value)}
+              className="h-11"
             />
+            <p className="text-xs text-muted-foreground">
+              Optional: Set when the event takes place
+            </p>
           </div>
           
           <div className="space-y-2">
-            <Label htmlFor="eventDescription">Description</Label>
+            <Label htmlFor="eventDescription" className="text-sm font-medium">Description</Label>
             <Textarea
               id="eventDescription"
-              placeholder="Event description (optional)..."
+              placeholder="Provide details about your event..."
               value={eventDescription}
               onChange={(e) => setEventDescription(e.target.value)}
-              rows={3}
+              rows={4}
+              className="resize-none"
             />
+            <p className="text-xs text-muted-foreground">
+              Additional context for participants (optional)
+            </p>
           </div>
           
-          <Button 
-            type="submit" 
-            disabled={!eventName.trim() || isCreating}
-            className="w-full btn-gradient"
-          >
-            {isCreating ? (
-              <>
-                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                Creating Event...
-              </>
-            ) : (
-              <>
-                <Plus className="mr-2 h-4 w-4" />
-                Create Event
-              </>
+          <div className="pt-4 border-t border-border">
+            <Button 
+              type="submit" 
+              disabled={!eventName.trim() || isCreating}
+              className="w-full h-11 btn-gradient text-base font-medium"
+            >
+              {isCreating ? (
+                <>
+                  <Loader2 className="mr-2 h-5 w-5 animate-spin" />
+                  Creating Event on Blockchain...
+                </>
+              ) : (
+                <>
+                  <Plus className="mr-2 h-5 w-5" />
+                  Create Event
+                </>
+              )}
+            </Button>
+            {!isCreating && (
+              <p className="text-xs text-muted-foreground text-center mt-2">
+                This will create a transaction on the Shardeum network
+              </p>
             )}
-          </Button>
+          </div>
         </form>
       </CardContent>
     </Card>

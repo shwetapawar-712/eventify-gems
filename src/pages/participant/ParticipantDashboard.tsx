@@ -120,31 +120,36 @@ export const ParticipantDashboard: React.FC = () => {
   return (
     <div className="min-h-screen bg-background">
       {/* Header */}
-      <header className="border-b border-border p-6">
-        <div className="max-w-7xl mx-auto flex items-center justify-between">
+      <header className="border-b border-border bg-card/50 backdrop-blur-sm">
+        <div className="max-w-7xl mx-auto p-6 flex items-center justify-between">
           <div className="flex items-center gap-4">
             <div className="p-2 bg-primary/10 rounded-lg">
               <Award className="h-6 w-6 text-primary" />
             </div>
             <div>
-              <h1 className="text-2xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
-                Participant Dashboard
-              </h1>
-              <p className="text-muted-foreground">Join events and collect badges</p>
+              <h1 className="text-2xl font-bold">Participant Dashboard</h1>
+              <p className="text-muted-foreground">Join events and collect NFT badges</p>
             </div>
           </div>
           
           <div className="flex items-center gap-4">
-            <div className="flex items-center gap-2 p-3 bg-muted/30 rounded-lg">
-              <Wallet className="h-4 w-4 text-primary" />
-              <div>
-                <p className="text-xs text-muted-foreground">Connected</p>
-                <p className="text-sm font-mono">
-                  {account ? `${account.slice(0, 6)}...${account.slice(-4)}` : 'Not connected'}
-                </p>
+            {account && (
+              <div className="flex items-center gap-2 p-3 bg-muted/30 rounded-lg">
+                <Wallet className="h-4 w-4 text-primary" />
+                <div>
+                  <p className="text-xs text-muted-foreground">Connected</p>
+                  <p className="text-sm font-mono">
+                    {account.slice(0, 6)}...{account.slice(-4)}
+                  </p>
+                </div>
+                <Badge variant="outline" className="text-xs">Shardeum</Badge>
               </div>
-              <Badge variant="outline" className="text-xs">Shardeum</Badge>
-            </div>
+            )}
+            
+            <Button onClick={() => window.location.href = '/'} variant="outline">
+              <Calendar className="mr-2 h-4 w-4" />
+              Home
+            </Button>
             
             <Button onClick={disconnectWallet} variant="outline">
               <LogOut className="mr-2 h-4 w-4" />

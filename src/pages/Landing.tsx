@@ -19,7 +19,10 @@ export const Landing: React.FC = () => {
 
   const handleWalletConnected = () => {
     if (selectedRole) {
-      navigate(`/${selectedRole}`);
+      // Add a small delay for better UX
+      setTimeout(() => {
+        navigate(`/${selectedRole}`);
+      }, 500);
     }
   };
 
